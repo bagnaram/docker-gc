@@ -1,4 +1,4 @@
-FROM rhel7
+FROM registry.access.redhat.com/rhel7
 
 ENV DOCKER_VERSION 1.12.4
 
