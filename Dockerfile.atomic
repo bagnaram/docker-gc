@@ -11,7 +11,7 @@ RUN microdnf --enablerepo=rhel-7-server-rpms \
   && mkdir -p /usr/local/bin/ \
   && mv $(find -name 'docker' -type f) /usr/local/bin/ \
   && chmod +x /usr/local/bin/docker \
-  && microdnf remove curl tar gzip \
+  && microdnf remove tar gzip \
   && microdnf clean all \
   && rm -rf /tmp/* 
 
