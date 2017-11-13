@@ -298,4 +298,4 @@ fi
 log "Sleeping..."
 sleep 30
 
-./docker-gc
+/docker-gc
