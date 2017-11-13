@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  name: docker-gc
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: docker-gc:latest
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    git:
+      ref: master
+      uri: https://github.com/bagnaram/docker-gc
+    type: Git
+  strategy:
+    dockerStrategy:
+      dockerfilePath: Dockerfile.atomic
+    type: Docker
+  triggers: []
+

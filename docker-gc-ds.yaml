@@ -12,7 +12,6 @@ spec:
         name: docker-gc
     spec:
       nodeSelector:
-        region: infra
       containers:
       - image: docker-registry.default.svc:5000/default/docker-gc@sha256:e2d4af0102a45abb54293c5f734bdb08477a25956deffdb69bd5c1fccfe61e5b
         imagePullPolicy: Always
@@ -28,5 +27,5 @@ spec:
       - name: dockersock
         hostPath:
           path: /var/run/docker.sock
-      serviceAccount: useroot
+      serviceAccount: docker-gc
       terminationGracePeriodSeconds: 10
