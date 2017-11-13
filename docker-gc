@@ -56,6 +56,7 @@ SYSLOG_LEVEL=${SYSLOG_LEVEL:=info}
 SYSLOG_TAG=${SYSLOG_TAG:=docker-gc}
 DRY_RUN=${DRY_RUN:=0}
 EXCLUDE_DEAD=${EXCLUDE_DEAD:=0}
+CLEANUP_INTERVAL=14400
 
 for pid in $(pidof -s docker-gc); do
     if [[ $pid != $$ ]]; then
@@ -299,6 +300,6 @@ while true; do
   fi
 
   log "Sleeping..."
-  sleep 30
+  sleep $CLEANUP_INTERVAL
 
 done
