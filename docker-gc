@@ -295,3 +295,7 @@ else
     xargs -n 1 $DOCKER rmi $FORCE_IMAGE_FLAG < images.reap &>/dev/null || true
 fi
 
+log "Sleeping..."
+sleep 30
+
+./docker-gc
