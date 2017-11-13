@@ -24,6 +24,50 @@ still on disk.
 This script is intended to be run as a cron job, but you can also run it as a Docker
 container (see [below](#running-as-a-docker-container)).
 
+## Installing to OpenShift 
+
+This script will run as a DaemonSet on each of your schedulable nodes. You begin by
+building the image and pushing it to the internal registry.
+
+Modify the `Dockerfile.atomic` to point to the correct version of Docker.
+
+```
+ENV DOCKER_VERSION 1.12.6
+```
+
+For disconnected environments, you will also have to provide a Docker binary. You can modify the URL
+in `Dockerfile.atomic` to point to a hosted copy.
+```
+ && curl -sSL -O https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION}.tgz \
+
+```
+
+Now go ahead and deploy the BuildConfig for the `docker-gc` image.
+
+```
+$ oc project default
+$ oc create -f docker-gc-bc.yaml
+$ oc start-build docker-gc
+```
+
+
+In order for it to successfully run, you will need to create a custom ServiceAccount called docker-gc.
+The docker-gc service account will permit this daemon to run priveleged on each of the nodes.
+
+```
+$ oc create serviceaccount docker-gc
+$ oc adm policy add-scc-to-user anyuid -z docker-gc
+$ oadm policy add-scc-to-user privileged -z docker-gc
+```
+
+Now you can deploy the DaemonSet.
+
+```
+$ oc create -f docker-gc-ds.yaml
+```
+It will automatically startup on each of your nodes. It runs in the `openshift` project.
+
+
 ## Building the Debian Package
 
 

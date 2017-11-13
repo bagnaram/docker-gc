@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: docker-gc
+spec:
+  selector:
+      matchLabels:
+        name: docker-gc
+  template:
+    metadata:
+      labels:
+        name: docker-gc
+    spec:
+      nodeSelector:
+        region: infra
+      containers:
+      - image: docker-registry.default.svc:5000/default/docker-gc@sha256:e2d4af0102a45abb54293c5f734bdb08477a25956deffdb69bd5c1fccfe61e5b
+        imagePullPolicy: Always
+        name: docker-gc
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        volumeMounts:
+         - mountPath: /var/run/docker.sock
+           name: dockersock
+        securityContext:
+          privileged: true
+      volumes:
+      - name: dockersock
+        hostPath:
+          path: /var/run/docker.sock
+      serviceAccount: useroot
+      terminationGracePeriodSeconds: 10
