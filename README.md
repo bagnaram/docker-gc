@@ -196,7 +196,7 @@ $ docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v /etc:/etc:ro s
 The `/etc` directory is also mapped so that it can read any exclude files
 that you've created.
 
-## Installing in OpenShift 
+## Running in OpenShift 
 
 This script will run as a DaemonSet on each of your schedulable nodes. You begin by
 building the image and pushing it to the internal registry.
